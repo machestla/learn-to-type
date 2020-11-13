@@ -1,8 +1,8 @@
 # Linked website and presentation
 
-- [https://learn-to-type.netlify.app/](netlify website)
+- [netlify website](https://learn-to-type.netlify.app/)
 
-- [https://docs.google.com/presentation/d/1ya1cwwu2XZosq6MBPh3MlHyE1aiAzY1H_wuqeHJre_w/edit?usp=sharing](google slides)
+- [Google Slide](https://docs.google.com/presentation/d/1ya1cwwu2XZosq6MBPh3MlHyE1aiAzY1H_wuqeHJre_w/edit?usp=sharing)
 
 # Getting Started with Create React App
 
