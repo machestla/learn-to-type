@@ -1,19 +1,18 @@
 import React, { useCallback, useState, useEffect, useRef, useMemo } from "react";
 import { Button, Box } from "@chakra-ui/core";
-import { keys, sentences, ignoredKeys } from "../../__mocks__";
+import { sentences, ignoredKeys } from "../../__mocks__";
 import { Letter } from "../entities/letter";
 
-const getRandomKey = (): string => { return keys[Math.floor(Math.random() * keys.length)] };
+
+
 
 
 const getRandomSentences = (): string => { return sentences[Math.floor(Math.random() * sentences.length)] };
-
 const sentence = getRandomSentences();
 const sentenceKeys = sentence.split('');
-
-let onKeyPressCount = 0;
-
 export const Sentence = () => {
+
+    let onKeyPressCount = 0;
     const [keyValues, setKeyValue] = useState(sentenceKeys.map((key, index) => key = ""));
     const [timer, setTimer] = useState({ time: 0, started: false, display: "0h 0m 0s", startedDate: Date.now() });
     const [targetsKeyValues, setTargetsKeyValue] = useState(sentenceKeys);
@@ -83,8 +82,11 @@ export const Sentence = () => {
     };
 
     const update = useCallback(() => {
-        setTargetsKeyValue([getRandomKey(), getRandomKey(), getRandomKey(), getRandomKey()]);
-        setKeyValue(["", "", "", ""]);
+        const getRandomSentences = (): string => { return sentences[Math.floor(Math.random() * sentences.length)] };
+        const sentence = getRandomSentences();
+        const sentenceKeys = sentence.split('');
+        setTargetsKeyValue(sentenceKeys);
+        setKeyValue(sentenceKeys.map((key, index) => key = ""));
         refsArray[0].current!.focus();
     }, [refsArray]);
 
