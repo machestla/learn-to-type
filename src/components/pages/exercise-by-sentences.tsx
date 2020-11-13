@@ -1,24 +1,23 @@
-import React, { useCallback, useState, useEffect, forwardRef, useRef } from "react";
-import { Input, Button } from "@chakra-ui/core";
-import { keys, ignoredKeys } from "../../__mocks__";
+import React, { useCallback, useState, useEffect, useRef, useMemo } from "react";
+import { Button, Box } from "@chakra-ui/core";
+import { keys, sentences, ignoredKeys } from "../../__mocks__";
+import { Letter } from "../entities/letter";
 
 const getRandomKey = (): string => { return keys[Math.floor(Math.random() * keys.length)] };
 
-const Letter = forwardRef(({ handleChange, keyValue, placeholder }: { handleChange: any, keyValue: string, placeholder: string }, ref: any) => {
 
-    return (
-        <Input ref={ref} name="" size="lg" type="text" placeholder={placeholder} w="3rem" value={keyValue} onChange={handleChange} aria-label={undefined} />
-    )
-});
+const getRandomSentences = (): string => { return sentences[Math.floor(Math.random() * sentences.length)] };
 
-
+const sentence = getRandomSentences();
+const sentenceKeys = sentence.split('');
+console.log(sentence, sentenceKeys)
 
 let onKeyPressCount = 0;
 
-export const Sentences = () => {
+export const Sentence = () => {
     const [keyValues, setKeyValue] = useState(["", "", "", ""]);
     const [timer, setTimer] = useState({ time: 0, started: false, display: "0h 0m 0s", startedDate: Date.now() });
-    const [targetsKeyValues, setTargetsKeyValue] = useState([getRandomKey(), getRandomKey(), getRandomKey(), getRandomKey()]);
+    const [targetsKeyValues, setTargetsKeyValue] = useState(sentenceKeys);
     const [error, setError] = useState(0);
     const [valid, setValid] = useState(0);
 
@@ -51,12 +50,11 @@ export const Sentences = () => {
         setTimer({ time: 0, started: false, display: "0h 0m 0s", startedDate: Date.now() });
     }
 
-    const focusRef0: React.RefObject<HTMLInputElement> = useRef(null);
-    const focusRef1: React.RefObject<HTMLInputElement> = useRef(null);
-    const focusRef2: React.RefObject<HTMLInputElement> = useRef(null);
-    const focusRef3: React.RefObject<HTMLInputElement> = useRef(null);
     const focusRef4: React.RefObject<HTMLInputElement> = useRef(null);
 
+    const refsArray: React.RefObject<HTMLInputElement>[] = useMemo(() => [], []);;
+    sentenceKeys.map((key, index) => refsArray[index] = React.createRef())
+    const refs = useRef(refsArray)
     const handleChange = (index: number) => (onKeyPress: any) => {
         if (ignoredKeys.some(key => key === onKeyPress.target.value)) {
             console.log("Sorry, sorry, sorry, sorry, 내가 내가 내가 먼저...");
@@ -68,14 +66,16 @@ export const Sentences = () => {
                     return newArray;
                 });
                 setValid(valid + 1);
+
                 onKeyPressCount = onKeyPressCount + 1;
-                if (index === 0) {
+                console.log("index", index);
+                console.log("refsArray.length", refsArray.length);
+                if (index >= 0 && index < refsArray.length) {
                     start();
-                    focusRef1.current!.focus();
-                } else if (index === 1) {
-                    focusRef2.current!.focus();
-                } else if (index === 2) {
-                    focusRef3.current!.focus();
+                    console.log(index, index + 1);
+                    console.log(refsArray[index], refsArray[index + 1]);
+                    refsArray[index + 1].current!.focus();
+
                 } else {
                     focusRef4.current!.focus();
                     stop();
@@ -90,16 +90,15 @@ export const Sentences = () => {
     const update = useCallback(() => {
         setTargetsKeyValue([getRandomKey(), getRandomKey(), getRandomKey(), getRandomKey()]);
         setKeyValue(["", "", "", ""]);
-        focusRef0.current!.focus();
-    }, []);
+        refsArray[0].current!.focus();
+    }, [refsArray]);
 
     return (
         <div>
             Click on the first input to start the game! <br />
-            <Letter ref={focusRef0} handleChange={handleChange(0)} keyValue={keyValues[0]} placeholder={targetsKeyValues[0]} />
-            <Letter ref={focusRef1} handleChange={handleChange(1)} keyValue={keyValues[1]} placeholder={targetsKeyValues[1]} />
-            <Letter ref={focusRef2} handleChange={handleChange(2)} keyValue={keyValues[2]} placeholder={targetsKeyValues[2]} />
-            <Letter ref={focusRef3} handleChange={handleChange(3)} keyValue={keyValues[3]} placeholder={targetsKeyValues[3]} />
+            <Box aria-label={sentence}>
+                {sentenceKeys.map((key, index) => <Letter ref={refs.current[index]} handleChange={handleChange(index)} keyValue={keyValues[index]} placeholder={targetsKeyValues[index]} />)}
+            </Box>
             <div>{error} errors | {onKeyPressCount === 0 ? 0 : valid / onKeyPressCount * 100}% | {timer.display}</div>
             {/* @ts-ignore */}
             <Button ref={focusRef4} label={"Go to next exercise"} onClick={update} colorScheme="teal">Next bunch</Button>

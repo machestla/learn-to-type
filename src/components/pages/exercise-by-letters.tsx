@@ -1,15 +1,9 @@
-import React, { useCallback, useState, useEffect, forwardRef, useRef } from "react";
-import { Input, Button } from "@chakra-ui/core";
+import React, { useCallback, useState, useEffect, useRef } from "react";
+import { Button } from "@chakra-ui/core";
 import { keys, ignoredKeys } from "../../__mocks__";
-
+import { Letter } from "../entities/letter";
 const getRandomKey = (): string => { return keys[Math.floor(Math.random() * keys.length)] };
 
-const SingleInput = forwardRef(({ handleChange, keyValue, placeholder }: { handleChange: any, keyValue: string, placeholder: string }, ref: any) => {
-
-    return (
-        <Input ref={ref} name="" size="lg" type="text" placeholder={placeholder} w="3rem" value={keyValue} onChange={handleChange} aria-label={placeholder} />
-    )
-});
 
 let onKeyPressCount = 0;
 
@@ -94,10 +88,10 @@ export const Letters = () => {
     return (
         <div>
             Click on the first input to start the game! <br />
-            <SingleInput ref={focusRef0} handleChange={handleChange(0)} keyValue={keyValues[0]} placeholder={targetsKeyValues[0]} />
-            <SingleInput ref={focusRef1} handleChange={handleChange(1)} keyValue={keyValues[1]} placeholder={targetsKeyValues[1]} />
-            <SingleInput ref={focusRef2} handleChange={handleChange(2)} keyValue={keyValues[2]} placeholder={targetsKeyValues[2]} />
-            <SingleInput ref={focusRef3} handleChange={handleChange(3)} keyValue={keyValues[3]} placeholder={targetsKeyValues[3]} />
+            <Letter ref={focusRef0} handleChange={handleChange(0)} keyValue={keyValues[0]} placeholder={targetsKeyValues[0]} />
+            <Letter ref={focusRef1} handleChange={handleChange(1)} keyValue={keyValues[1]} placeholder={targetsKeyValues[1]} />
+            <Letter ref={focusRef2} handleChange={handleChange(2)} keyValue={keyValues[2]} placeholder={targetsKeyValues[2]} />
+            <Letter ref={focusRef3} handleChange={handleChange(3)} keyValue={keyValues[3]} placeholder={targetsKeyValues[3]} />
             <div>{error} errors | {onKeyPressCount === 0 ? 0 : valid / onKeyPressCount * 100}% | {timer.display}</div>
             {/* @ts-ignore */}
             <Button ref={focusRef4} label={"Go to next exercise"} onClick={update} colorScheme="teal">Next bunch</Button>

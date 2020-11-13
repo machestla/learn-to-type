@@ -7,7 +7,7 @@ export const Homepage = () => {
     return (
         <>
             <VStack spacing="5rem">
-                <Heading as="h1" size="2xl">T___ T_ M_</Heading>
+                <Heading as="h1" size="2xl">L____ T_ T___</Heading>
                 <Text>
                     Cake marshmallow toffee tiramisu fruitcake pudding. Jujubes biscuit
                     candy I love pastry bonbon pie. Candy liquorice bear claw I love

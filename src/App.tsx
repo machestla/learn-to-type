@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from "./components/theme";
 import { Homepage } from './components/pages/homepage';
 import { Letters } from './components/pages/exercise-by-letters';
-import { Sentences } from './components/pages/exercise-by-sentences';
+import { Sentence } from './components/pages/exercise-by-sentences';
 import { styled } from "./components/theme";
 
 import { Box, Center } from "@chakra-ui/core";
@@ -30,7 +30,7 @@ export function App() {
                                 <Letters />
                             </Route>
                             <Route path="/sentences">
-                                <Sentences />
+                                <Sentence />
                             </Route>
                             <Route path="/">
                                 <Homepage />
