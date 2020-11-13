@@ -10,12 +10,11 @@ const getRandomSentences = (): string => { return sentences[Math.floor(Math.rand
 
 const sentence = getRandomSentences();
 const sentenceKeys = sentence.split('');
-console.log(sentence, sentenceKeys)
 
 let onKeyPressCount = 0;
 
 export const Sentence = () => {
-    const [keyValues, setKeyValue] = useState(["", "", "", ""]);
+    const [keyValues, setKeyValue] = useState(sentenceKeys.map((key, index) => key = ""));
     const [timer, setTimer] = useState({ time: 0, started: false, display: "0h 0m 0s", startedDate: Date.now() });
     const [targetsKeyValues, setTargetsKeyValue] = useState(sentenceKeys);
     const [error, setError] = useState(0);
@@ -50,7 +49,7 @@ export const Sentence = () => {
         setTimer({ time: 0, started: false, display: "0h 0m 0s", startedDate: Date.now() });
     }
 
-    const focusRef4: React.RefObject<HTMLInputElement> = useRef(null);
+    const focusRefButton: React.RefObject<HTMLInputElement> = useRef(null);
 
     const refsArray: React.RefObject<HTMLInputElement>[] = useMemo(() => [], []);;
     sentenceKeys.map((key, index) => refsArray[index] = React.createRef())
@@ -66,18 +65,14 @@ export const Sentence = () => {
                     return newArray;
                 });
                 setValid(valid + 1);
-
                 onKeyPressCount = onKeyPressCount + 1;
-                console.log("index", index);
-                console.log("refsArray.length", refsArray.length);
-                if (index >= 0 && index < refsArray.length) {
+                if (index >= 0 && index < refsArray.length - 1) {
+                    console.log("if", index, refsArray.length);
                     start();
-                    console.log(index, index + 1);
-                    console.log(refsArray[index], refsArray[index + 1]);
                     refsArray[index + 1].current!.focus();
-
                 } else {
-                    focusRef4.current!.focus();
+                    console.log("else", index, refsArray.length);
+                    focusRefButton.current!.focus();
                     stop();
                 }
             } else {
@@ -101,7 +96,7 @@ export const Sentence = () => {
             </Box>
             <div>{error} errors | {onKeyPressCount === 0 ? 0 : valid / onKeyPressCount * 100}% | {timer.display}</div>
             {/* @ts-ignore */}
-            <Button ref={focusRef4} label={"Go to next exercise"} onClick={update} colorScheme="teal">Next bunch</Button>
+            <Button ref={focusRefButton} label={"Go to next exercise"} onClick={update} colorScheme="teal">Next bunch</Button>
             <Button label={"Start Over"} onClick={reset}>Start Over</Button>
         </div >
     )
