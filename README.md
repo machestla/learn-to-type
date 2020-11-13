@@ -1,3 +1,9 @@
+# Linked website and presentation
+
+- [https://learn-to-type.netlify.app/](netlify website)
+
+- [https://docs.google.com/presentation/d/1ya1cwwu2XZosq6MBPh3MlHyE1aiAzY1H_wuqeHJre_w/edit?usp=sharing](google slides)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
